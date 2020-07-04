@@ -39,8 +39,7 @@ func main() {
 	 */
 	const appDir = "./cite/dist"
 	http.Handle("/", http.StripPrefix("/", http.FileServer(http.Dir(appDir))))
-	http.Handle("/chat", http.StripPrefix("/chat", http.FileServer(http.Dir("."))))
-
+	
 	/*
 	 * API Server
 	 */
@@ -50,9 +49,8 @@ func main() {
 	/*
 	 * WebSocket
 	 */
-	http.HandleFunc("/ws/chat", func(w http.ResponseWriter, r *http.Request) {
-		//serveWs(w, r)
-	})
+	http.HandleFunc("/desktop", captureHandler)
+
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
