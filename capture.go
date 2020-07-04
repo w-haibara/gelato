@@ -41,9 +41,8 @@ func captureHandler(w http.ResponseWriter, r *http.Request) {
 		log.Println("[read error]", err)
 		return
 	}
-	if bytes.Equal(message, []byte("ok")) {
+	for !bytes.Equal(message, []byte("start")) {
 		log.Printf("received is not \"ok\", recv: %s", message)
-		return
 	}
 
 	go func() {
@@ -64,6 +63,6 @@ func captureHandler(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 
-		time.Sleep(time.Second)
+		time.Sleep(time.Millisecond*30)
 	}
 }

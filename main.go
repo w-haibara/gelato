@@ -39,6 +39,7 @@ func main() {
 	 */
 	const appDir = "./cite/dist"
 	http.Handle("/", http.StripPrefix("/", http.FileServer(http.Dir(appDir))))
+	http.Handle("/desktop-test", http.StripPrefix("/desktop-test", http.FileServer(http.Dir("."))))
 	
 	/*
 	 * API Server

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Document</title>
+	</head>
+	<body>
+		<div>
+			<input type="button" id="start" value="START">
+		</div>
+		<div>
+			<img id="screen" src="">
+		<div>
+		<script>
+			var sock = new WebSocket('ws://192.168.33.10:8080/desktop');
+
+			sock.addEventListener('open',function(e){
+				console.log('Socket connected');
+			});
+
+			sock.addEventListener('message',function(e){
+				// console.log(e.data);
+				var screen = document.getElementById("screen");
+				var url = window.URL || window.webkitURL;
+				screen.src = url.createObjectURL(e.data);
+			});
+
+			document.addEventListener('DOMContentLoaded',function(e){
+				document.getElementById('start').addEventListener('click',function(e){
+					sock.send('start');
+				});
+			});
+		</script>
+	</body>
+</html>

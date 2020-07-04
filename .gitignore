@@ -1,5 +1,3 @@
-cert.pem
-key.pem
+capture
 go.mod
 go.sum
-index.html
