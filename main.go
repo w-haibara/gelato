@@ -37,10 +37,11 @@ func main() {
 	/*
 	 * Web Server
 	 */
-	const appDir = "./cite/dist"
+	const appDir = "./page/dist"
+	const testPageDir = "./test-page"
 	http.Handle("/", http.StripPrefix("/", http.FileServer(http.Dir(appDir))))
-	http.Handle("/desktop-test", http.StripPrefix("/desktop-test", http.FileServer(http.Dir("."))))
-	
+	http.Handle("/desktop-test", http.StripPrefix("/desktop-test", http.FileServer(http.Dir(testPageDiri+"/desktop"))))
+
 	/*
 	 * API Server
 	 */
