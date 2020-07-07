@@ -3,7 +3,9 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		
+		<link rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/xterm/3.12.0/xterm.min.css'></script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/xterm/3.12.0/xterm.min.js'></script>
 		<title>Console test</title>
 	</head>
 	<body>
@@ -11,7 +13,12 @@
 			<input type="text" name="command" value="">
 			<input type="button" id="button" value="SEND">
 		</form>
+		<div id="terminal"></div>
+		
 		<script>
+			const term = new Terminal();
+			term.open(document.getElementById('terminal'));
+
 			var sock = new WebSocket('ws://'+location.hostname+':8080/console');
 
 			sock.addEventListener('open',function(e){
@@ -20,7 +27,10 @@
 
 			sock.addEventListener('message',function(e){
 				console.log(e.data);
+				term.write(e.data)
 			});
+
+			term.on('data', data => sock.send(data));
 
 			document.addEventListener('DOMContentLoaded',function(e){
 				document.getElementById('button').addEventListener('click',function(e){
@@ -29,6 +39,6 @@
 					document.form.command.value = "";
 				});
 			});
-		</script>
+		</script> 
 	</body>
 </html>
