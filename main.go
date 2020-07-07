@@ -27,10 +27,6 @@ func statusAPIHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(j)
 }
 
-func consoleAPIHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write(nil)
-}
-
 func main() {
 	fmt.Println("gelato")
 
@@ -40,19 +36,19 @@ func main() {
 	const appDir = "./page/dist"
 	const testPageDir = "./test-page"
 	http.Handle("/", http.StripPrefix("/", http.FileServer(http.Dir(appDir))))
-	http.Handle("/desktop-test", http.StripPrefix("/desktop-test", http.FileServer(http.Dir(testPageDiri+"/desktop"))))
+	http.Handle("/console-test", http.StripPrefix("/console-test", http.FileServer(http.Dir(testPageDir+"/console"))))
+	http.Handle("/desktop-test", http.StripPrefix("/desktop-test", http.FileServer(http.Dir(testPageDir+"/desktop"))))
 
 	/*
 	 * API Server
 	 */
 	http.HandleFunc("/api/status", statusAPIHandler)
-	http.HandleFunc("/api/console", consoleAPIHandler)
 
 	/*
 	 * WebSocket
 	 */
-	http.HandleFunc("/desktop", captureHandler)
-
+	http.HandleFunc("/console", consoleHandler)
+	http.HandleFunc("/desktop", desktopHandler)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }

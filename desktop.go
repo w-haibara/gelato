@@ -2,17 +2,15 @@ package main
 
 import (
 	"bytes"
+	"image"
+	"image/jpeg"
 	"log"
 	"net/http"
 	"time"
-	"image"
-	"image/jpeg"
 
 	"github.com/gorilla/websocket"
 	"github.com/vova616/screenshot"
 )
-
-var upgrader = websocket.Upgrader{}
 
 func capture(c *websocket.Conn) error {
 	screen, err := screenshot.CaptureScreen()
@@ -28,7 +26,8 @@ func capture(c *websocket.Conn) error {
 	return c.WriteMessage(websocket.BinaryMessage, buf.Bytes())
 }
 
-func captureHandler(w http.ResponseWriter, r *http.Request) {
+func desktopHandler(w http.ResponseWriter, r *http.Request) {
+	upgrader := websocket.Upgrader{}
 	c, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Print("upgrade:", err)
@@ -63,6 +62,6 @@ func captureHandler(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 
-		time.Sleep(time.Millisecond*30)
+		time.Sleep(time.Millisecond * 30)
 	}
 }
