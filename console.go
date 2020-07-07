@@ -25,7 +25,6 @@ func consoleHandler(w http.ResponseWriter, r *http.Request) {
 	c, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Fatal(err)
-		return
 	}
 	defer c.Close()
 
@@ -51,7 +50,6 @@ func consoleHandler(w http.ResponseWriter, r *http.Request) {
 		_, p, err := c.ReadMessage()
 		if err != nil {
 			log.Fatal(err)
-			return
 		}
 		f.Write(p)
 		//log.Println("recv: ", p)
