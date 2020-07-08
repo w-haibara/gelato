@@ -28,7 +28,18 @@ func statusAPIHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	fmt.Println("gelato")
+	/*
+	 * Title View (genelated by http://patorjk.com/software/taag/#p=display&h=0&v=0&f=Epic&t=Gelato)
+	 */
+	fmt.Println(`
+(  ____ \(  ____ \( \      (  ___  )\__   __/(  ___  )
+| (    \/| (    \/| (      | (   ) |   ) (   | (   ) |
+| |      | (__    | |      | (___) |   | |   | |   | |
+| | ____ |  __)   | |      |  ___  |   | |   | |   | |
+| | \_  )| (      | |      | (   ) |   | |   | |   | |
+| (___) || (____/\| (____/\| )   ( |   | |   | (___) |
+(_______)(_______/(_______/|/     \|   )_(   (_______)
+`)
 
 	/*
 	 * Web Server
