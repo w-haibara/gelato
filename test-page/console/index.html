@@ -1,44 +1,50 @@
 <!DOCTYPE html>
 <html lang="ja">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		
-		<link rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/xterm/3.12.0/xterm.min.css'></script>
-		<script src='https://cdnjs.cloudflare.com/ajax/libs/xterm/3.12.0/xterm.min.js'></script>
-		<title>Console test</title>
-	</head>
-	<body>
-		<form name="form" id="form" onsubmit="return false;">
-			<input type="text" name="command" value="">
-			<input type="button" id="button" value="SEND">
-		</form>
-		<div id="terminal"></div>
-		
-		<script>
-			const term = new Terminal();
-			term.open(document.getElementById('terminal'));
 
-			var sock = new WebSocket('ws://'+location.hostname+':8080/console');
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-			sock.addEventListener('open',function(e){
-				console.log('Socket connected');
-			});
+	<link rel='stylesheet' , href='https://cdnjs.cloudflare.com/ajax/libs/xterm/3.12.0/xterm.min.css'>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/xterm/3.12.0/xterm.min.js'></script>
+	<title>Console test</title>
+</head>
 
-			sock.addEventListener('message',function(e){
-				console.log(e.data);
-				term.write(e.data)
-			});
+<body>
+	<div id="terminal"></div>
 
-			term.on('data', data => sock.send(data));
+	<script>
+		const term = new Terminal({ cursorBlink: true });
+		term.open(document.getElementById('terminal'));
 
-			document.addEventListener('DOMContentLoaded',function(e){
-				document.getElementById('button').addEventListener('click',function(e){
-					var cmd = document.form.command.value;
-					sock.send(cmd+"\n");
-					document.form.command.value = "";
-				});
-			});
-		</script> 
-	</body>
+		var sock = new WebSocket('ws://' + location.hostname + ':8080/console');
+
+		sock.addEventListener('open', function (e) {
+			console.log('Socket connected');
+		});
+
+		sock.addEventListener('message', function (e) {
+			console.log(e.data);
+			term.write(e.data)
+		});
+
+		term.on('data', data => sock.send(data));
+	</script>
+</body>
+
+<style>
+	* {
+		margin: 0;
+		padding: 0;
+	}
+
+	#teminal {
+		height: 100vh;
+		width: auto;
+		background-size: auto 100%;
+		background-position: center;
+		background-repeat: no-repeat;
+	}
+</style>
+
 </html>
