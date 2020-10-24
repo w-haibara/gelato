@@ -15,7 +15,8 @@ func shell() *os.File {
 	f, err := pty.Start(c)
 	if err != nil {
 		log.Println(err)
-		panic(err)
+		log.Fatal(err)
+		return nil
 	}
 	return f
 }
